@@ -5,8 +5,8 @@ from dotenv import load_dotenv
 
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
-#Хост на котором будет сервис
-BASE_URL = os.environ.get("LOCAL_IP")
+# Хост на котором будет сервис
+BASE_URL = f"http://{os.environ.get('LOCAL_IP')}"
 
 def get_move():
     response = requests.get(f"{BASE_URL}/api/last_move")
@@ -23,7 +23,7 @@ def send_move(drone_id: int, cell: str):
         print(f"Ошибка при отправке данных: {e}")
         return False
 
-#Пример отправки и поста информации
-data = get_move()
-send_move(5, "H7")
-print(f"ID: {data['id']}, X: {data["x"]}, Y: {data['y']}")
+# Примеры использования:
+# data = get_move()
+# send_move(5, "H7")
+# print(f"ID: {data['id']}, X: {data['x']}, Y: {data['y']}")
