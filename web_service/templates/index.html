@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Шахматный ход</title>
+</head>
+<body>
+    <h1>Отправить шахматный ход</h1>
+    
+    <form action="/submit/" method="post">
+        <div>
+            <label>ID дрона:
+                <input type="number" name="drone_id" required min="1">
+            </label>
+        </div>
+        
+        <div>
+            <label>Клетка (например, A1):
+                <input 
+                    type="text" 
+                    name="cell" 
+                    required 
+                    pattern="[A-Ha-h][1-8]" 
+                    title="Введите клетку от A1 до H8"
+                >
+            </label>
+        </div>
+        
+        <button type="submit">Отправить</button>
+    </form>
+
+    <h2>Последний ход:</h2>
+    <div>
+        {% if last_move.id %}
+            ID дрона: {{ last_move.id }}, Координаты: X={{ last_move.x }}, Y={{ last_move.y }}
+        {% else %}
+            Нет данных
+        {% endif %}
+    </div>
+</body>
+</html>
