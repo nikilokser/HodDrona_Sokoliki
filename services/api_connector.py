@@ -1,7 +1,12 @@
 import requests
+import os
+from os.path import join, dirname
+from dotenv import load_dotenv
 
+dotenv_path = join(dirname(__file__), '.env')
+load_dotenv(dotenv_path)
 #Хост на котором будет сервис
-BASE_URL = "http://192.168.1.107:8000"
+BASE_URL = os.environ.get("LOCAL_IP")
 
 def get_move():
     response = requests.get(f"{BASE_URL}/api/last_move")
