@@ -1,6 +1,5 @@
 test.py
 clover-swarm-espnow-1.3.3/
-*.pyc
 .env
 __pycache__
 .DS_Store

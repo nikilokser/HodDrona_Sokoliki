@@ -1,8 +1,12 @@
+import sys
+from pathlib import Path
+sys.path.append(str(Path(__file__).parent.parent))
+
 from fastapi import FastAPI, Request, Form
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
-from ..services.cells_transwormer import cell_to_coordinates
+from services.cells_transwormer import cell_to_coordinates
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
