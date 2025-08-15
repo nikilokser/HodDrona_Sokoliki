@@ -12,7 +12,7 @@ app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 
 # Храним последний ход
-last_move = {"id": None, "x": None, "y": None}
+last_move = {"id": None, "x": None, "y": None, "cell": None}
 
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
@@ -22,17 +22,24 @@ async def read_root(request: Request):
 @app.post("/submit/")
 async def submit_move(
     request: Request,
-    drone_id: int = Form(...),
-    cell: str = Form(...)
+    drone_id: int = Form(None),
+    cell: str = Form(None)
 ):
-    
-    coords = cell_to_coordinates(cell)
-
     """Обработка отправленной формы"""
-    # Сохраняем данные
-    last_move["id"] = drone_id
-    last_move["x"] = coords[0]
-    last_move["y"] = coords[1]
+    if drone_id is None or cell is None or cell.strip().upper() == "NONE":
+        # Сброс значений
+        last_move["id"] = None
+        last_move["x"] = None
+        last_move["y"] = None
+        last_move["cell"] = None
+    else:
+        # Обычная обработка
+        cell = cell.strip().upper()
+        coords = cell_to_coordinates(cell)
+        last_move["id"] = drone_id
+        last_move["x"] = coords[0]
+        last_move["y"] = coords[1]
+        last_move["cell"] = cell
     
     # Перенаправляем обратно на главную с обновлёнными данными
     return RedirectResponse(url="/", status_code=303)

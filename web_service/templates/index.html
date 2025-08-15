@@ -156,14 +156,25 @@
             <h2>Последний ход</h2>
             {% if last_move.id %}
                 <div class="status-info">
-                    ID дрона: {{ last_move.id }}<br>
-                    Координаты: X={{ last_move.x }}, Y={{ last_move.y }}
+                    <div class="status-row">ID дрона: {{ last_move.id }}</div>
+                    <div class="status-row">Клетка: {{ last_move.cell }}</div>
+                    <div class="status-row">Координаты: X={{ last_move.x }}, Y={{ last_move.y }}</div>
                 </div>
             {% else %}
                 <div class="status-info">
                     Нет данных о последнем ходе
                 </div>
             {% endif %}
+            
+            <style>
+                .status-row {
+                    margin: 4px 0;
+                }
+                .status-row:not(:last-child) {
+                    border-bottom: 1px solid #eee;
+                    padding-bottom: 4px;
+                }
+            </style>
         </div>
     </div>
 </body>

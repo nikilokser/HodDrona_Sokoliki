@@ -25,5 +25,5 @@ def send_move(drone_id: int, cell: str):
 
 # Примеры использования:
 # data = get_move()
-# send_move(5, "H7")
+#send_move(None, None)
 # print(f"ID: {data['id']}, X: {data['x']}, Y: {data['y']}")
