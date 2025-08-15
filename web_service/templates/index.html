@@ -1,40 +1,170 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Шахматный ход</title>
+    <title>Drone Control Panel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --background-color: #ecf0f1;
+            --success-color: #2ecc71;
+            --text-color: #2c3e50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        button {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .status-panel {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .status-panel h2 {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .status-info {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background-color: white;
+            border-radius: 4px;
+            margin-top: 0.5rem;
+            border: 1px solid #ddd;
+        }
+
+        .chess-input {
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Отправить шахматный ход</h1>
-    
-    <form action="/submit/" method="post">
-        <div>
-            <label>ID дрона:
-                <input type="number" name="drone_id" required min="1">
-            </label>
-        </div>
+    <div class="container">
+        <h1>Управление дроном</h1>
         
-        <div>
-            <label>Клетка (например, A1):
-                <input 
-                    type="text" 
-                    name="cell" 
-                    required 
-                    pattern="[A-Ha-h][1-8]" 
-                    title="Введите клетку от A1 до H8"
-                >
-            </label>
-        </div>
-        
-        <button type="submit">Отправить</button>
-    </form>
+        <form action="/submit/" method="post">
+            <div class="form-group">
+                <label for="drone_id">ID дрона:</label>
+                <input type="number" 
+                       id="drone_id" 
+                       name="drone_id" 
+                       required 
+                       min="1"
+                       placeholder="Введите ID дрона">
+            </div>
+            
+            <div class="form-group">
+                <label for="cell">Клетка (A1-H8):</label>
+                <input type="text" 
+                       id="cell" 
+                       name="cell" 
+                       required 
+                       pattern="[A-Ha-h][1-8]"
+                       class="chess-input"
+                       placeholder="Например: E4"
+                       title="Введите клетку от A1 до H8">
+            </div>
+            
+            <button type="submit">Отправить команду</button>
+        </form>
 
-    <h2>Последний ход:</h2>
-    <div>
-        {% if last_move.id %}
-            ID дрона: {{ last_move.id }}, Координаты: X={{ last_move.x }}, Y={{ last_move.y }}
-        {% else %}
-            Нет данных
-        {% endif %}
+        <div class="status-panel">
+            <h2>Последний ход</h2>
+            {% if last_move.id %}
+                <div class="status-info">
+                    ID дрона: {{ last_move.id }}<br>
+                    Координаты: X={{ last_move.x }}, Y={{ last_move.y }}
+                </div>
+            {% else %}
+                <div class="status-info">
+                    Нет данных о последнем ходе
+                </div>
+            {% endif %}
+        </div>
     </div>
 </body>
 </html>
