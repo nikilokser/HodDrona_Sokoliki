@@ -56,7 +56,7 @@ with Drone(network_id=0x12, wifi_channel=6, uart_port="/dev/ttyAMA1") as drone:
             drone.wait(3)
             navigate_wait_local(x=x, y=y, z=1, speed=0.4)
             drone.wait(0.5)
-            navigate_wait_local(x=x, y=y, z=0.15, speed=0.2)
+            navigate_wait_local(x=x, y=y, z=0.15, speed=0.5)
             drone.wait(0.4)
             land_kill()
             pix_reboot()
